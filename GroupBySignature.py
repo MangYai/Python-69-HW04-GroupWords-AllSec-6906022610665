@@ -1,5 +1,26 @@
+import re
+
+_VALID = re.compile(r'^[a-z]+$')
+
+
 def group_by_signature(words: list) -> list:
-    pass
+    groups = {}
+    order = []
+
+    for w in words:
+        if not w or not _VALID.match(w):
+            continue
+
+        signature = ''.join(sorted(w))
+
+        if signature not in groups:
+            groups[signature] = []
+            order.append(signature)
+
+        groups[signature].append(w)
+
+    return [groups[sig] for sig in order]
+
 
 if __name__ == "__main__":
     # Example 1
